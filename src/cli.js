@@ -31,7 +31,7 @@ function cli() {
     help();
     return;
   }
-  fs.readFile(args['--schema'], { encoding: 'utf-8' }, function(err, data) {
+  fs.readFile(args['--schema'], { encoding: 'utf-8' }, function (err, data) {
     if (!err) {
       let fileContent = '';
       let fileName = '';
@@ -58,24 +58,24 @@ function cli() {
             }
             fileName = `${filteredArray[1]}.${
               args['--js'] || args['--mjs'] ? 'js' : 'ts'
-            }`;
+              }`;
             if (args['--js']) {
               fileContent = `const { objectType${
                 args['--mq'] || args['-q'] || args['-m'] ? ', extendType' : ''
-              } } = require('nexus')
+                } } = require('nexus')
 
 `;
             } else if (args['--mjs']) {
               fileContent = `import nexus from 'nexus'
 const { objectType${
                 args['--mq'] || args['-q'] || args['-m'] ? ', extendType' : ''
-              } } = nexus
+                } } = nexus
 					
 `;
             } else {
               fileContent = `import { objectType${
                 args['--mq'] || args['-q'] || args['-m'] ? ', extendType' : ''
-              } } from 'nexus'	
+                } } from '@nexus/schema'	
 
 `;
             }
@@ -112,11 +112,11 @@ ${args['--js'] ? '' : 'export '}const ${modelName.singular}Query = extendType({
                   args['-f'] && args['-o']
                     ? '{ filtering: true, ordering: true }'
                     : args['-f']
-                    ? '{ filtering: true }'
-                    : args['-o']
-                    ? '{ ordering: true }'
-                    : ''
-                })
+                      ? '{ filtering: true }'
+                      : args['-o']
+                        ? '{ ordering: true }'
+                        : ''
+                  })
   },
 })`;
                 moduleExports += `
@@ -127,7 +127,7 @@ ${args['--js'] ? '' : 'export '}const ${modelName.singular}Query = extendType({
 
 ${args['--js'] ? '' : 'export '}const ${
                   modelName.singular
-                }Mutation = extendType({
+                  }Mutation = extendType({
   type: 'Mutation',
   definition(t) {
     t.crud.createOne${model}()
@@ -151,7 +151,7 @@ module.exports = {
 ${moduleExports}
 }`;
               }
-              fs.writeFile(dir + fileName, fileContent, () => {});
+              fs.writeFile(dir + fileName, fileContent, () => { });
               fileContent = '';
               fileName = '';
             }
@@ -165,7 +165,7 @@ ${index}}`;
       fs.writeFile(
         dir + `index.${args['--js'] || args['--mjs'] ? 'js' : 'ts'}`,
         index,
-        () => {}
+        () => { }
       );
       console.log('Created files success');
     } else {
